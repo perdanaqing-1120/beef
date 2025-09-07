@@ -6,36 +6,55 @@
     <title>Home</title>
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         #root {
             background-color: #0d1c27;
             color: white;
             font-size: 2em;
-            height: 100vh;
+            min-height: 100dvh;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
 <body>
     <div id="root">
-        <button onclick="onLogin()" id='loginButton' disabled>LOGIN</button>
-        <button onclick="onLogout()" id='logoutButton'>LOGOUT</button>
-        <input type="text" placeholder="username" id='usernameInput' />
-        <input type="password" placeholder="password" id='passwordInput' />
+        <div>
+            <span id="pembuka">
+                <h2>Selamat Datang di Halaman Login</h2>
+                <h3>Silahkan Masukkan Username dan Password</h3>
+            </span>
+
+            <button onclick="onLogin()" id='loginButton' disabled>LOGIN</button>
+            <button onclick="onLogout()" id='logoutButton'>LOGOUT</button>
+            <input type="text" placeholder="username" id='usernameInput' />
+            <input type="password" placeholder="password" id='passwordInput' />
+        </div>
         <br/>
         <br/>
-        <h3 id="admin">login sebagai admin</h3>
+        <h3 id="owner">login sebagai owner</h3>
+        <h3 id="coOwner">login sebagai co-owner</h3>
         <h3 id="standar">login sebagai user</h3>
         <h3 id="guest">login sebagai tamu</h3>
     </div>
 
     <script type="application/javascript">
-
+        
         let usernameInput = document.getElementById('usernameInput')
         let passwordInput = document.getElementById('passwordInput')
         let loginButton = document.getElementById('loginButton')
         let logoutButton = document.getElementById('logoutButton')
         
-        admin.style.display = "none"
+        owner.style.display = "none"
+        coOwner.style.display = "none"
         standar.style.display = "none"
         guest.style.display = "none"
         logoutButton.style.display = "none"
@@ -53,37 +72,48 @@
             console.log(usernameInput.value)
             localStorage.setItem("username", usernameInput.value)
             
-            if(usernameInput.value == "admin" && passwordInput.value == "1234") {
-                localStorage.setItem("role","admin")
+            if(usernameInput.value == "Perdana" && passwordInput.value == "1234") {
+                localStorage.setItem("role","owner")
 
-                admin.style.display = "block"
+                owner.style.display = "block"
+                coOwner.style.display = "none"
                 guest.style.display = "none"
                 standar.style.display = "none"
-
+                pembuka.style.display = "none"
+                
                 logoutButton.style.display = "block"
                 loginButton.style.display = "none"
                 
                 usernameInput.style.display = "none"
                 passwordInput.style.display = "none"
-
-                // localStorage.setItem("role","guest")
                 
-                // guest.style.display = "block"
-                // admin.style.display = "none"
-                // standar.style.display = "none"
+                root.style.backgroundColor = "#800080"
                 
-                // usernameInput.style.display = "none"
-                // passwordInput.style.display = "none"
+            } else if(usernameInput.value == "Dzul" && passwordInput.value == "1234") {
+                localStorage.setItem("role","coOwner")
                 
-                // logoutButton.style.display = "block"
-                // loginButton.style.display = "none"
+                owner.style.display = "none"
+                coOwner.style.display = "block"
+                guest.style.display = "none"
+                standar.style.display = "none"
+                pembuka.style.display = "none"
+                
+                logoutButton.style.display = "block"
+                loginButton.style.display = "none"
+                
+                usernameInput.style.display = "none"
+                passwordInput.style.display = "none"
+                
+                root.style.backgroundColor = "#ff0000"
                 
             } else {
                 localStorage.setItem("role","basic")
                 
                 standar.style.display = "block"
-                admin.style.display = "none"
+                owner.style.display = "none"
+                coOwner.style.display = "none"
                 guest.style.display = "none"
+                pembuka.style.display = "none"
                 
                 logoutButton.style.display = "block"
                 loginButton.style.display = "none"
@@ -97,15 +127,19 @@
             console.log('aktifLogout')
             localStorage.clear()
             
-            admin.style.display = "none"
+            owner.style.display = "none"
+            coOwner.style.display = "none"
             standar.style.display = "none"
             guest.style.display = "none"
+            pembuka.style.display = "block"
             
             logoutButton.style.display = "none"
             loginButton.style.display = "block"
             
             usernameInput.style.display = "block"
             passwordInput.style.display = "block"
+            
+            root.style.backgroundColor = "#0d1c27"
         }
         
         if(localStorage.getItem('username')){
@@ -114,29 +148,33 @@
 
             loginButton.style.display = "none"
             
-            if(localStorage.getItem('role') == "admin"){
+            if(localStorage.getItem('role') == "owner"){
                 standar.style.display = "none"
                 guest.style.display = "none"
-                admin.style.display = "block"
+                owner.style.display = "block"
+                coOwner.style.display = "none"
 
                 logoutButton.style.display = "block"
                 
-            }if(localStorage.getItem('role') == "guest"){
-                admin.style.display = "none"
+            }if(localStorage.getItem('role') == "coOwner"){
+                owner.style.display = "none"
                 standar.style.display = "none"
-                guest.style.display = "block"
-                
+                guest.style.display = "none"
+                coOwner.style.display = "block"
+
                 logoutButton.style.display = "block"
+
 
             }if(localStorage.getItem('role') == "basic") {
-                admin.style.display = "none"
+                owner.style.display = "none"
                 guest.style.display = "none"
                 standar.style.display = "block"
+                coOwner.style.display = "none"
 
                 logoutButton.style.display = "block"
             }
         }
 
-        </script>
+    </script>
 </body>
 </html>    
